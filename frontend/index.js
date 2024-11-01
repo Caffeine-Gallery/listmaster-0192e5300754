@@ -1,6 +1,7 @@
 import { backend } from 'declarations/backend';
 
 const newItemInput = document.getElementById('newItem');
+const newItemQuantityInput = document.getElementById('newItemQuantity');
 const addItemButton = document.getElementById('addItem');
 const shoppingList = document.getElementById('shoppingList');
 const loadingSpinner = document.getElementById('loadingSpinner');
@@ -33,7 +34,7 @@ function createListItem(item) {
     const li = document.createElement('li');
     li.className = `list-group-item d-flex justify-content-between align-items-center ${item.completed ? 'completed' : ''}`;
     li.innerHTML = `
-        <span class="item-text">${item.text}</span>
+        <span class="item-text">${item.text} (Qty: ${item.quantity})</span>
         <div>
             <button class="btn btn-sm btn-success me-2 toggle-btn" data-id="${item.id}">
                 <i class="fas ${item.completed ? 'fa-times' : 'fa-check'}"></i>
@@ -48,11 +49,13 @@ function createListItem(item) {
 
 addItemButton.addEventListener('click', async () => {
     const text = newItemInput.value.trim();
-    if (text) {
+    const quantity = parseInt(newItemQuantityInput.value, 10);
+    if (text && quantity > 0) {
         showLoading();
         try {
-            await backend.addItem(text);
+            await backend.addItem(text, quantity);
             newItemInput.value = '';
+            newItemQuantityInput.value = '1';
             await loadItems();
         } catch (error) {
             console.error('Error adding item:', error);

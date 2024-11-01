@@ -6,9 +6,10 @@ export interface ShoppingItem {
   'id' : bigint,
   'text' : string,
   'completed' : boolean,
+  'quantity' : bigint,
 }
 export interface _SERVICE {
-  'addItem' : ActorMethod<[string], bigint>,
+  'addItem' : ActorMethod<[string, bigint], bigint>,
   'deleteItem' : ActorMethod<[bigint], boolean>,
   'getItems' : ActorMethod<[], Array<ShoppingItem>>,
   'toggleItem' : ActorMethod<[bigint], boolean>,

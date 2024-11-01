@@ -11,6 +11,7 @@ actor {
   type ShoppingItem = {
     id: Nat;
     text: Text;
+    quantity: Nat;
     completed: Bool;
   };
 
@@ -19,12 +20,13 @@ actor {
   stable var nextId : Nat = 0;
 
   // Function to add a new item to the shopping list
-  public func addItem(text: Text) : async Nat {
+  public func addItem(text: Text, quantity: Nat) : async Nat {
     let id = nextId;
     nextId += 1;
     let newItem : ShoppingItem = {
       id = id;
       text = text;
+      quantity = quantity;
       completed = false;
     };
     shoppingList := Array.append(shoppingList, [newItem]);
@@ -43,6 +45,7 @@ actor {
         {
           id = item.id;
           text = item.text;
+          quantity = item.quantity;
           completed = not item.completed;
         }
       } else {

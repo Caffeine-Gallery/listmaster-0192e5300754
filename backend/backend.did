@@ -2,10 +2,11 @@ type ShoppingItem =
  record {
    completed: bool;
    id: nat;
+   quantity: nat;
    "text": text;
  };
 service : {
-  addItem: (text) -> (nat);
+  addItem: (text, nat) -> (nat);
   deleteItem: (nat) -> (bool);
   getItems: () -> (vec ShoppingItem) query;
   toggleItem: (nat) -> (bool);
